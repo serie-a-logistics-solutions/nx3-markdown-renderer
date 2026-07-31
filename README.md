@@ -7,9 +7,11 @@ Mermaid diagrams, inline SVG, canvas snippets, alerts and a table of contents.
 ## Features
 
 - Single-file custom element with encapsulated styles (Shadow DOM)
-- highlight.js, DOMPurify bundled in
-- Mermaid and svg-pan-zoom lazy-loaded via dynamic import (~500 KB not paid
-  unless a diagram is present)
+- highlight.js and DOMPurify bundled in
+- Mermaid (~500 KB) and svg-pan-zoom loaded from a CDN (jsDelivr) **at
+  runtime**, only when a document actually contains a diagram. They are
+  NOT part of the library bundle and NOT part of your app bundle, so
+  consumers who never render diagrams pay zero bytes for them.
 - Ships as ESM only; targets modern browsers (2020+)
 
 ## Install
@@ -27,6 +29,10 @@ const el = document.createElement('nx3-markdown-renderer');
 el.text = '# Hello';
 document.body.append(el);
 ```
+
+You do NOT need to install `mermaid` or `svg-pan-zoom` yourself — they are
+fetched from jsDelivr the first time a diagram is rendered. See
+"Self-hosting the external libraries" below for offline / CSP setups.
 
 ### Via CDN (Vanilla JS)
 
@@ -96,6 +102,29 @@ same or higher level is encountered.
   collapse-show-less-label="Show less"
 ></nx3-markdown-renderer>
 ```
+
+## Self-hosting the external libraries
+
+By default, Mermaid and svg-pan-zoom are fetched from jsDelivr the first time
+they are needed:
+
+- `https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs`
+- `https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.2/+esm`
+
+For offline environments, strict Content Security Policies, or if you want to
+pin exact versions, call `configureExternalLibs()` once before rendering:
+
+```ts
+import { configureExternalLibs } from 'nx3-markdown-renderer';
+
+configureExternalLibs({
+  mermaid: '/vendor/mermaid.esm.min.mjs',
+  svgPanZoom: '/vendor/svg-pan-zoom.esm.js',
+});
+```
+
+If you use CDN URLs, your CSP must allow both `script-src` and `connect-src`
+for the origin (e.g. `cdn.jsdelivr.net`).
 
 ## Development
 

@@ -85,27 +85,75 @@ interface ThinkingPart {
 type SvgPanZoomModule = typeof import("svg-pan-zoom");
 type SvgPanZoomFactory = SvgPanZoomModule extends (...args: infer A) => infer R ? (...args: A) => R : SvgPanZoomModule;
 
+/**
+ * URLs used to load the optional external libraries at runtime. Defaults
+ * point to jsDelivr's ESM CDN so consumers never bundle these libs into
+ * their own build. Override via `configureExternalLibs()` for offline/CSP
+ * scenarios or to pin exact versions.
+ */
+export interface ExternalLibSources {
+  mermaid?: string;
+  svgPanZoom?: string;
+}
+
+// Bundler-friendly indirection: an object literal that Vite/Rollup/webpack
+// cannot statically analyse and turn into an eager import. Overwrite the
+// entries at runtime to swap the source (e.g. self-hosted mirror).
+const externalLibs: Required<ExternalLibSources> = {
+  mermaid: "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs",
+  svgPanZoom: "https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.2/+esm",
+};
+
+/**
+ * Overrides the URLs used to fetch the optional Mermaid and svg-pan-zoom
+ * bundles. Call this once, before rendering any Mermaid diagram, to point
+ * the loader at a self-hosted mirror or a specific version.
+ */
+export function configureExternalLibs(sources: ExternalLibSources): void {
+  if (sources.mermaid) externalLibs.mermaid = sources.mermaid;
+  if (sources.svgPanZoom) externalLibs.svgPanZoom = sources.svgPanZoom;
+}
+
 let mermaidModulePromise: Promise<typeof import("mermaid").default> | null = null;
 let svgPanZoomModulePromise: Promise<SvgPanZoomFactory> | null = null;
 
+// Wrap the dynamic import in a helper whose argument is only known at
+// runtime. This prevents bundlers from resolving the URL at build time and
+// pre-fetching / inlining the module.
+function importFromUrl<T>(url: string): Promise<T> {
+  return import(/* @vite-ignore */ /* webpackIgnore: true */ url) as Promise<T>;
+}
+
 async function getMermaid(): Promise<typeof import("mermaid").default> {
   if (!mermaidModulePromise) {
-    mermaidModulePromise = import("mermaid").then((m) => {
-      m.default.initialize({ startOnLoad: false, theme: "default" });
-      return m.default;
-    });
+    mermaidModulePromise = importFromUrl<{ default: typeof import("mermaid").default }>(externalLibs.mermaid)
+      .then((m) => {
+        m.default.initialize({ startOnLoad: false, theme: "default" });
+        return m.default;
+      })
+      .catch((err) => {
+        // Reset so a subsequent render can retry (e.g. after network
+        // recovery or a configureExternalLibs() call).
+        mermaidModulePromise = null;
+        throw new Error(
+          `nx3-markdown-renderer: failed to load Mermaid from ${externalLibs.mermaid}. ` +
+            "The document contains a mermaid diagram but the external module could not be fetched. " +
+            "Check network / CSP (script-src, connect-src) or override the source with configureExternalLibs(). " +
+            `Original error: ${err instanceof Error ? err.message : String(err)}`,
+        );
+      });
   }
   return mermaidModulePromise;
 }
 
 async function getSvgPanZoom(): Promise<SvgPanZoomFactory> {
   if (!svgPanZoomModulePromise) {
-    // With esModuleInterop, the synthetic `default` holds the callable factory
-    // at runtime; fall back to the module namespace if it isn't present.
-    svgPanZoomModulePromise = import("svg-pan-zoom").then((m) => {
-      const mod = m as unknown as { default?: SvgPanZoomFactory } & SvgPanZoomFactory;
-      return (mod.default ?? mod) as SvgPanZoomFactory;
-    });
+    svgPanZoomModulePromise = importFromUrl<{ default?: SvgPanZoomFactory } & SvgPanZoomFactory>(externalLibs.svgPanZoom)
+      .then((m) => (m.default ?? m) as SvgPanZoomFactory)
+      .catch((err) => {
+        svgPanZoomModulePromise = null;
+        throw err;
+      });
   }
   return svgPanZoomModulePromise;
 }

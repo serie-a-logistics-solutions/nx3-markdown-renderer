@@ -307,5 +307,5 @@ if (typeof customElements !== "undefined" && !customElements.get(TAG_NAME)) {
 }
 
 // Re-export the core class for consumers who prefer direct access.
-export { MarkDownRenderer } from "./markdown-renderer-core";
-export type { MarkDownRendererOptions } from "./markdown-renderer-core";
+export { configureExternalLibs, MarkDownRenderer } from "./markdown-renderer-core";
+export type { ExternalLibSources, MarkDownRendererOptions } from "./markdown-renderer-core";
