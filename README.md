@@ -144,9 +144,8 @@ The build emits:
 
 ## Release
 
-Push a tag `vX.Y.Z`. The `Build and release` workflow builds the library and
-attaches `dist/` to a matching GitHub release. jsDelivr resolves `@vX.Y.Z`
-tags directly, so no npm publish is required for CDN consumers.
+- npm version minor
+- git push --follow-tags
 
 ## License
 
