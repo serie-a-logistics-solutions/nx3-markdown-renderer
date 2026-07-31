@@ -31,7 +31,10 @@
     "dev": "vite",
     "build": "vite build && tsc --emitDeclarationOnly --declaration --outDir dist",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "version": "npm run build && git add -f dist",
+    "postversion": "git push --follow-tags",
+    "release:minor": "npm version minor"
   },
   "keywords": [
     "markdown",
