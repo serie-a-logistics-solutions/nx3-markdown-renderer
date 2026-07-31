@@ -34,6 +34,22 @@ interface ThinkingPart {
     content: string;
     incomplete?: boolean;
 }
+/**
+ * URLs used to load the optional external libraries at runtime. Defaults
+ * point to jsDelivr's ESM CDN so consumers never bundle these libs into
+ * their own build. Override via `configureExternalLibs()` for offline/CSP
+ * scenarios or to pin exact versions.
+ */
+export interface ExternalLibSources {
+    mermaid?: string;
+    svgPanZoom?: string;
+}
+/**
+ * Overrides the URLs used to fetch the optional Mermaid and svg-pan-zoom
+ * bundles. Call this once, before rendering any Mermaid diagram, to point
+ * the loader at a self-hosted mirror or a specific version.
+ */
+export declare function configureExternalLibs(sources: ExternalLibSources): void;
 export declare class MarkDownRenderer {
     static tableStartTag: string;
     static tableEndTag: string;

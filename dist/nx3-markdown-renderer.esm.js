@@ -1,7 +1,8 @@
 var i = Object.defineProperty;
 var c = (o, n, e) => n in o ? i(o, n, { enumerable: !0, configurable: !0, writable: !0, value: e }) : o[n] = e;
 var t = (o, n, e) => c(o, typeof n != "symbol" ? n + "" : n, e);
-import { M as d } from "./chunks/cynefin-VYW2F7L2-kBmvLOUj.js";
+import { MarkDownRenderer as d } from "./markdown-renderer-core.js";
+import { configureExternalLibs as w } from "./markdown-renderer-core.js";
 const h = `pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}/*!
   Theme: GitHub
   Description: Light theme as seen on github.com
@@ -181,6 +182,7 @@ const l = "nx3-markdown-renderer";
 typeof customElements < "u" && !customElements.get(l) && customElements.define(l, m);
 export {
   d as MarkDownRenderer,
-  m as Nx3MarkdownRendererElement
+  m as Nx3MarkdownRendererElement,
+  w as configureExternalLibs
 };
 //# sourceMappingURL=nx3-markdown-renderer.esm.js.map

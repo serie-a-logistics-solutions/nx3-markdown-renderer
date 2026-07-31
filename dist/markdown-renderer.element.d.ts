@@ -84,6 +84,6 @@ export declare class Nx3MarkdownRendererElement extends HTMLElement {
     get postRender(): Nx3PostRenderFn | null;
     set postRender(fn: Nx3PostRenderFn | null);
 }
-export { MarkDownRenderer } from "./markdown-renderer-core";
-export type { MarkDownRendererOptions } from "./markdown-renderer-core";
+export { configureExternalLibs, MarkDownRenderer } from "./markdown-renderer-core";
+export type { ExternalLibSources, MarkDownRendererOptions } from "./markdown-renderer-core";
 //# sourceMappingURL=markdown-renderer.element.d.ts.map
