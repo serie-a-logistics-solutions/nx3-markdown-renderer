@@ -1,0 +1,10 @@
+node_modules
+.DS_Store
+.vite
+*.log
+coverage
+
+# Keep dist under version control so jsDelivr can serve tagged releases directly
+# from GitHub. Comment the next line back in if you prefer to publish via a
+# release workflow only.
+# dist

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nx3-markdown-renderer - demo</title>
+    <style>
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+        max-width: 900px;
+        margin: 32px auto;
+        padding: 0 16px;
+        color: #111827;
+      }
+
+      h1 {
+        margin-bottom: 0.25em;
+      }
+
+      p.lead {
+        color: #6b7280;
+        margin-top: 0;
+      }
+
+      .card {
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 16px;
+        margin: 16px 0;
+        background: #fff;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>nx3-markdown-renderer</h1>
+    <p class="lead">Framework-agnostic Markdown web component.</p>
+
+    <div class="card">
+      <nx3-markdown-renderer
+        id="target"
+        toc="true"
+        collapse-heading-level="2"
+        collapse-from-heading-index="4"
+        collapse-show-more-label="Mehr anzeigen"
+        collapse-show-less-label="Weniger anzeigen"
+      ></nx3-markdown-renderer>
+    </div>
+
+    <script type="module">
+      // Vite dev server serves the source directly. In production consumers
+      // load the built ESM bundle from dist/nx3-markdown-renderer.esm.js.
+      import "../src/markdown-renderer.element.ts";
+
+      const sample = `# Demo
+
+This is a **live** demo. The renderer supports:
+
+- code blocks with syntax highlighting
+- mermaid diagrams
+- inline SVG and canvas blocks
+- alerts and tables
+- automatic TOC
+
+## Code
+
+\`\`\`ts
+export function greet(name: string): string {
+  return \`Hello, \${name}\`;
+}
+\`\`\`
+
+## Mermaid
+
+\`\`\`mermaid
+graph LR
+  A[Start] --> B{Decision}
+  B -->|yes| C[Yes branch]
+  B -->|no| D[No branch]
+\`\`\`
+
+## Alert
+
+> [!NOTE]
+> Mermaid and svg-pan-zoom are lazy-loaded when a diagram is present.
+
+## Additional details
+
+Everything from this heading onward is collapsed behind a "Show more" button
+because \`collapse-from-heading-index="4"\` was passed to the component.
+
+### Nested content stays inside
+
+Sub-headings and their content remain inside the collapsible region.
+
+- Item A
+- Item B
+- Item C
+`;
+
+      document.getElementById("target").text = sample;
+    </script>
+  </body>
+</html>

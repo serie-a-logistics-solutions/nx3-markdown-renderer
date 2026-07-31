@@ -1,0 +1,351 @@
+/* Basic styling for the markdown renderer web component.
+   Ported 1:1 from projects/nx3-core-ui/src/lib/nx3-components/markdown-renderer/markdown-renderer.component.scss
+   with the top-level selector removed because the styles are scoped into the
+   web component's shadow root (or applied globally via the standalone CSS file). */
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.nx3-markdown-renderer {
+  display: block;
+  width: 100%;
+}
+
+.nx3-markdown-renderer .message-text {
+  line-height: 1.4;
+}
+
+/* Thinking block */
+.nx3-markdown-renderer .thinking-block {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  margin: 8px 0;
+  background: #f9fafb;
+}
+.nx3-markdown-renderer .thinking-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 500;
+}
+.nx3-markdown-renderer .thinking-toggle {
+  transition: transform 0.2s ease;
+}
+.nx3-markdown-renderer .thinking-toggle.expanded {
+  transform: rotate(180deg);
+}
+.nx3-markdown-renderer .thinking-content {
+  padding: 0 12px;
+  overflow: hidden;
+  white-space: pre-wrap;
+}
+.nx3-markdown-renderer .thinking-content.collapsed {
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.nx3-markdown-renderer .thinking-content.expanded {
+  max-height: none;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+/* Code block */
+.nx3-markdown-renderer .code-block-wrapper {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  margin: 8px 0;
+  overflow: hidden;
+}
+.nx3-markdown-renderer .code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  background: #f3f4f6;
+  font-size: 0.85rem;
+  font-family: monospace;
+}
+.nx3-markdown-renderer .code-block-header .copy-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.nx3-markdown-renderer .code-block-wrapper pre {
+  margin: 0;
+  padding: 12px;
+  overflow-x: auto;
+  background: #ffffff;
+}
+
+/* Mermaid / SVG / Canvas wrappers */
+.nx3-markdown-renderer .mermaid-wrapper,
+.nx3-markdown-renderer .svg-wrapper,
+.nx3-markdown-renderer .canvas-wrapper {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  margin: 8px 0;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.nx3-markdown-renderer .mermaid-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  background: #f3f4f6;
+  font-size: 0.85rem;
+}
+.nx3-markdown-renderer .mermaid-toolbar-title {
+  margin-right: auto;
+  font-weight: 500;
+}
+.nx3-markdown-renderer .mermaid-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  border-radius: 4px;
+  padding: 2px 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+.nx3-markdown-renderer .mermaid-btn-sep {
+  width: 1px;
+  height: 18px;
+  background: #d1d5db;
+}
+.nx3-markdown-renderer .mermaid-pan-container {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  background: #ffffff;
+}
+.nx3-markdown-renderer .mermaid-resize-handle {
+  height: 8px;
+  cursor: ns-resize;
+  background: #f3f4f6;
+  border-top: 1px solid #e5e7eb;
+}
+.nx3-markdown-renderer .mermaid-resize-handle.dragging {
+  background: #d1d5db;
+}
+.nx3-markdown-renderer .svg-render-container,
+.nx3-markdown-renderer .canvas-render-container {
+  padding: 8px;
+  text-align: center;
+}
+.nx3-markdown-renderer .svg-render-container svg,
+.nx3-markdown-renderer .canvas-render-container canvas {
+  max-width: 100%;
+}
+
+/* Alerts */
+.nx3-markdown-renderer .alert {
+  border-left: 4px solid #6b7280;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin: 8px 0;
+  background: #f9fafb;
+}
+.nx3-markdown-renderer .alert-header {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.nx3-markdown-renderer .alert-header .alert-icon {
+  margin-right: 4px;
+}
+.nx3-markdown-renderer .alert-note {
+  border-left-color: #3b82f6;
+  background: #eff6ff;
+}
+.nx3-markdown-renderer .alert-tip {
+  border-left-color: #10b981;
+  background: #ecfdf5;
+}
+.nx3-markdown-renderer .alert-important {
+  border-left-color: #8b5cf6;
+  background: #f5f3ff;
+}
+.nx3-markdown-renderer .alert-warning {
+  border-left-color: #f59e0b;
+  background: #fffbeb;
+}
+.nx3-markdown-renderer .alert-caution {
+  border-left-color: #ef4444;
+  background: #fef2f2;
+}
+
+/* Tables */
+.nx3-markdown-renderer table.markdown-table,
+.nx3-markdown-renderer table.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0;
+}
+.nx3-markdown-renderer table.markdown-table th,
+.nx3-markdown-renderer table.markdown-table td,
+.nx3-markdown-renderer table.table th,
+.nx3-markdown-renderer table.table td {
+  border: 1px solid #e5e7eb;
+  padding: 6px 8px;
+  text-align: left;
+}
+.nx3-markdown-renderer table.markdown-table thead th,
+.nx3-markdown-renderer table.markdown-table tr:first-child th,
+.nx3-markdown-renderer table.table thead th,
+.nx3-markdown-renderer table.table tr:first-child th {
+  background: #f3f4f6;
+}
+
+/* Heading anchors */
+.nx3-markdown-renderer .heading-anchor {
+  margin-left: 6px;
+  opacity: 0;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+.nx3-markdown-renderer h1:hover .heading-anchor,
+.nx3-markdown-renderer h2:hover .heading-anchor,
+.nx3-markdown-renderer h3:hover .heading-anchor,
+.nx3-markdown-renderer h4:hover .heading-anchor,
+.nx3-markdown-renderer h5:hover .heading-anchor,
+.nx3-markdown-renderer h6:hover .heading-anchor {
+  opacity: 0.6;
+}
+
+/* Table of contents */
+.nx3-markdown-renderer .doc-toc {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 8px 0;
+  background: #f9fafb;
+}
+.nx3-markdown-renderer .doc-toc-title {
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+.nx3-markdown-renderer .doc-toc.doc-toc-collapsed ul {
+  display: none;
+}
+.nx3-markdown-renderer .doc-toc ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.nx3-markdown-renderer .toc-l2 {
+  padding-left: 12px;
+}
+.nx3-markdown-renderer .toc-l3 {
+  padding-left: 24px;
+}
+
+.nx3-markdown-renderer .mermaid-error {
+  color: #b91c1c;
+  background: #fee2e2;
+  border-radius: 4px;
+  padding: 8px;
+  font-family: monospace;
+  font-size: 0.85rem;
+}
+
+/* Collapse hook */
+.nx3-markdown-renderer .nx3-collapse-wrapper {
+  position: relative;
+  margin: 24px 0;
+}
+
+.nx3-markdown-renderer .nx3-collapse-content {
+  overflow: hidden;
+}
+.nx3-markdown-renderer .nx3-collapse-collapsed .nx3-collapse-content {
+  display: none;
+}
+
+/* Toggle bar: horizontal rule + centered pill button */
+.nx3-markdown-renderer .nx3-collapse-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  color: #4b5563;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+}
+.nx3-markdown-renderer .nx3-collapse-toggle::before,
+.nx3-markdown-renderer .nx3-collapse-toggle::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+/* Inner label: renders as a pill so the click target is obvious */
+.nx3-markdown-renderer .nx3-collapse-toggle-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #374151;
+  white-space: nowrap;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.nx3-markdown-renderer .nx3-collapse-toggle:hover .nx3-collapse-toggle-label {
+  background: #f9fafb;
+  border-color: #9ca3af;
+  color: #111827;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.nx3-markdown-renderer .nx3-collapse-toggle:focus-visible {
+  outline: none;
+}
+.nx3-markdown-renderer .nx3-collapse-toggle:focus-visible .nx3-collapse-toggle-label {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Chevron: rotates when expanded */
+.nx3-markdown-renderer .nx3-collapse-toggle-chevron {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform 0.2s ease;
+}
+.nx3-markdown-renderer .nx3-collapse-wrapper:not(.nx3-collapse-collapsed) .nx3-collapse-toggle-chevron {
+  transform: rotate(-135deg) translate(-2px, -2px);
+}
+
+/* Secondary count / hint next to the label (e.g. "3 more sections") */
+.nx3-markdown-renderer .nx3-collapse-toggle-hint {
+  color: #9ca3af;
+  font-weight: 400;
+  font-size: 0.8rem;
+}

@@ -1,0 +1,3 @@
+/* Bundled highlight.js theme. Kept separate so it can be re-exported as a
+   standalone CSS file for consumers who do not use the shadow-DOM variant. */
+@import 'highlight.js/styles/github.css';
