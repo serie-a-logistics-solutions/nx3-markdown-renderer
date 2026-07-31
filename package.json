@@ -1,6 +1,6 @@
 {
   "name": "nx3-markdown-renderer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Framework-agnostic Web Component that renders Markdown (including thinking blocks, mermaid, inline SVG, canvas, alerts, TOC, DataTables toggle).",
   "type": "module",
   "main": "./dist/nx3-markdown-renderer.esm.js",
